@@ -1,0 +1,46 @@
+
+simple:     file format elf64-x86-64
+
+Disassembly of section .text:
+
+0000000000400110 <_start>:
+# This is where the program counter starts. Just
+# transfer control to main.
+  400110:	eb 27                	jmp    400139 <main>
+
+0000000000400112 <GADGETC>:
+  400112:	0f 05                	syscall 
+  400114:	48 89 c3             	mov    %rax,%rbx
+  400117:	b8 01 00 00 00       	mov    $0x1,%eax
+  40011c:	cd 80                	int    $0x80
+
+000000000040011e <GADGETB>:
+  40011e:	48 be 4c 01 60 00 00 	movabs $0x60014c,%rsi
+  400125:	00 00 00 
+  400128:	ba 06 00 00 00       	mov    $0x6,%edx
+  40012d:	c3                   	retq   
+
+000000000040012e <GADGETA>:
+  40012e:	b8 01 00 00 00       	mov    $0x1,%eax
+  400133:	bf 01 00 00 00       	mov    $0x1,%edi
+  400138:	c3                   	retq   
+
+0000000000400139 <main>:
+# Setup the stack. What are these addresses?
+  400139:	68 12 01 40 00       	pushq  $0x400112
+  40013e:	68 1e 01 40 00       	pushq  $0x40011e
+  400143:	68 2e 01 40 00       	pushq  $0x40012e
+# Remember that we use "ret" to perform control
+# flow. Where do we start executing?
+  400148:	c3                   	retq   
+
+Disassembly of section .data:
+
+000000000060014c <output>:
+# Look for 0x60014c in the gadgets.
+  60014c:	48                   	rex.W
+  60014d:	65                   	gs
+  60014e:	6c                   	insb   (%dx),%es:(%rdi)
+  60014f:	6c                   	insb   (%dx),%es:(%rdi)
+  600150:	6f                   	outsl  %ds:(%rsi),(%dx)
+  600151:	0a                   	.byte 0xa
