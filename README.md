@@ -1,14 +1,11 @@
 1. run make
-
 make
 
 2. run examples
-
 ./simple
 ./printf
 
 3. Look at object files
-
 vi simple.obj
 vi printf.obj
 
