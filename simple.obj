@@ -10,29 +10,29 @@ Disassembly of section .text:
 
 0000000000400112 <GADGETC>:
   400112:	0f 05                	syscall 
-  400114:	48 89 c3             	mov    %rax,%rbx
-  400117:	b8 01 00 00 00       	mov    $0x1,%eax
-  40011c:	cd 80                	int    $0x80
+  400114:	48 89 c3             	mov    rbx,rax
+  400117:	b8 01 00 00 00       	mov    eax,0x1
+  40011c:	cd 80                	int    0x80
 
 000000000040011e <GADGETB>:
-  40011e:	48 be 4c 01 60 00 00 	movabs $0x60014c,%rsi
+  40011e:	48 be 4c 01 60 00 00 	movabs rsi,0x60014c
   400125:	00 00 00 
-  400128:	ba 06 00 00 00       	mov    $0x6,%edx
-  40012d:	c3                   	retq   
+  400128:	ba 06 00 00 00       	mov    edx,0x6
+  40012d:	c3                   	ret    
 
 000000000040012e <GADGETA>:
-  40012e:	b8 01 00 00 00       	mov    $0x1,%eax
-  400133:	bf 01 00 00 00       	mov    $0x1,%edi
-  400138:	c3                   	retq   
+  40012e:	b8 01 00 00 00       	mov    eax,0x1
+  400133:	bf 01 00 00 00       	mov    edi,0x1
+  400138:	c3                   	ret    
 
 0000000000400139 <main>:
 # Setup the stack. What are these addresses?
-  400139:	68 12 01 40 00       	pushq  $0x400112
-  40013e:	68 1e 01 40 00       	pushq  $0x40011e
-  400143:	68 2e 01 40 00       	pushq  $0x40012e
+  400139:	68 12 01 40 00       	push   0x400112
+  40013e:	68 1e 01 40 00       	push   0x40011e
+  400143:	68 2e 01 40 00       	push   0x40012e
 # Remember that we use "ret" to perform control
 # flow. Where do we start executing?
-  400148:	c3                   	retq   
+  400148:	c3                   	ret    
 
 Disassembly of section .data:
 
@@ -40,7 +40,7 @@ Disassembly of section .data:
 # Look for 0x60014c in the gadgets.
   60014c:	48                   	rex.W
   60014d:	65                   	gs
-  60014e:	6c                   	insb   (%dx),%es:(%rdi)
-  60014f:	6c                   	insb   (%dx),%es:(%rdi)
-  600150:	6f                   	outsl  %ds:(%rsi),(%dx)
+  60014e:	6c                   	ins    BYTE PTR es:[rdi],dx
+  60014f:	6c                   	ins    BYTE PTR es:[rdi],dx
+  600150:	6f                   	outs   dx,DWORD PTR ds:[rsi]
   600151:	0a                   	.byte 0xa
